@@ -4,7 +4,7 @@ import type { NextConfig } from "next";
  * SMART activo (Laravel en Neubox).
  *
  * SMART_URL    = URL pública a la que apunta el botón y los links viejos.
- *                Hoy: https://moza.mx/smart
+ *                Hoy: https://smart.moza.mx
  * SMART_ORIGIN = (opcional) host de origen en Neubox, p. ej. https://origin.moza.mx
  *
  * Caso A: SMART_URL está en OTRO host (p. ej. smart.moza.mx)
@@ -14,7 +14,7 @@ import type { NextConfig } from "next";
  *            /smart/* se proxea con rewrite hacia Neubox; si no, se deja
  *            sin tocar y NO se debe mover el DNS de moza.mx todavía.
  */
-const SMART_URL = process.env.SMART_URL ?? "https://moza.mx/smart";
+const SMART_URL = process.env.SMART_URL ?? "https://smart.moza.mx";
 const SMART_ORIGIN = process.env.SMART_ORIGIN;
 
 const SITE_HOST = "moza.mx";

@@ -2,7 +2,7 @@
 // Imágenes: coloca los archivos en /public/images (ver README).
 
 export const SMART_URL =
-  process.env.NEXT_PUBLIC_SMART_URL ?? "https://moza.mx/smart";
+  process.env.NEXT_PUBLIC_SMART_URL ?? "https://smart.moza.mx";
 
 export const site = {
   name: "MOZA",
