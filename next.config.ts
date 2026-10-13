@@ -21,6 +21,18 @@ const SITE_HOST = "moza.mx";
 const smartHost = new URL(SMART_URL).hostname;
 const smartIsSameHost = smartHost === SITE_HOST || smartHost === `www.${SITE_HOST}`;
 
+/**
+ * MODO TEMPORAL (pre-launch): todo el sitio redirige al login del SMART.
+ * - Redirect TEMPORAL (307), no permanente: los navegadores no lo cachean.
+ * - /smart/* queda fuera para no crear loops cuando moza.mx apunte a Vercel.
+ * - Para lanzar el sitio real: LAUNCH_REDIRECT=off en Vercel y redeploy.
+ * - Al mover el DNS de moza.mx a Vercel, conviene que el destino sea directo:
+ *   LAUNCH_REDIRECT_URL=https://smart.moza.mx/login
+ */
+const LAUNCH_REDIRECT_ON = process.env.LAUNCH_REDIRECT !== "off";
+const LAUNCH_REDIRECT_URL =
+  process.env.LAUNCH_REDIRECT_URL ?? "https://moza.mx/smart/public/login";
+
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   images: {
@@ -32,7 +44,19 @@ const nextConfig: NextConfig = {
       { source: "/index.php/:path*", destination: "/:path*", permanent: true },
     ];
 
-    if (smartIsSameHost) return legacy;
+    // Todo lo que no sea /smart va al login (307). Va AL FINAL: el primero que coincide gana.
+    const launch = LAUNCH_REDIRECT_ON
+      ? [
+          { source: "/", destination: LAUNCH_REDIRECT_URL, permanent: false },
+          {
+            source: "/:path((?!smart(?:/|$)).+)",
+            destination: LAUNCH_REDIRECT_URL,
+            permanent: false,
+          },
+        ]
+      : [];
+
+    if (smartIsSameHost) return [...legacy, ...launch];
 
     const base = SMART_URL.replace(/\/$/, "");
     return [
@@ -47,6 +71,7 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       ...legacy,
+      ...launch,
     ];
   },
   async rewrites() {
