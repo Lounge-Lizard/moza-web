@@ -48,7 +48,7 @@ export default function RootLayout({
         <main id="main" className="flex-1">
           {children}
         </main>
-        <Footer logo={<Logo className="!h-24 !w-24" />} />
+        <Footer logo={<Logo className="!h-24 !w-auto" />} />
       </body>
     </html>
   );
