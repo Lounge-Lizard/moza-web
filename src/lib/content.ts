@@ -36,14 +36,17 @@ export const home = {
     {
       kicker: "Mantenimientos",
       title: "Tus sitios siempre en buen estado",
+      image: "/images/home/mantenimientos.jpg",
     },
     {
       kicker: "Especialistas",
       title: "Nos adecuamos a tus necesidades",
+      image: "/images/home/especialistas.jpg",
     },
     {
       kicker: "En tu lugar",
       title: "Amplia presencia de cuadrillas",
+      image: "/images/home/en-tu-lugar.jpg",
     },
   ],
   specialistsTitle: "Somos especialistas en servicios de telefonía",
@@ -170,4 +173,9 @@ export const contact = {
     "Si lo deseas puedes contactarnos a través de nuestros medios digitales o de manera física en nuestras oficinas con previa cita.",
   closing: "Con nosotros tus sitios y servicios nunca se detendrán",
   closingText: "Nuestro servicio está diseñado y ejecutado por especialistas.",
+};
+
+export const cta = {
+  title: "Con nosotros tus sitios y servicios nunca se detendrán",
+  button: "Contáctanos",
 };

@@ -1,89 +1,106 @@
 import Link from "next/link";
+import CtaBand from "@/components/CtaBand";
 import Photo from "@/components/Photo";
-import { home, stats } from "@/lib/content";
+import Counter from "@/components/motion/Counter";
+import HeadlineReveal from "@/components/motion/HeadlineReveal";
+import HeroTower from "@/components/motion/HeroTower";
+import Marquee from "@/components/motion/Marquee";
+import ReadingText from "@/components/motion/ReadingText";
+import { home, services, stats } from "@/lib/content";
 
 export default function HomePage() {
   return (
     <>
-      {/* Hero */}
-      <section className="relative isolate overflow-hidden bg-navy text-white">
-        <div
-          aria-hidden
-          className="absolute inset-0 -z-10 bg-[radial-gradient(60%_80%_at_85%_20%,rgba(232,80,26,0.28),transparent_60%)]"
-        />
-        <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-20 sm:px-6 md:grid-cols-[1.2fr_1fr] md:py-28">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.3em] text-orange">
-              MOZA Construcciones
-            </p>
-            <h1 className="mt-4 text-4xl font-black leading-tight sm:text-5xl lg:text-6xl">
-              {home.heroTitle}
-            </h1>
-            <p className="mt-6 max-w-xl text-lg text-white/80">{home.heroText}</p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                href="/about"
-                className="rounded-md bg-orange px-6 py-3 font-bold text-white transition-colors hover:bg-orange-600"
-              >
-                Nosotros
-              </Link>
-              <Link
-                href="/servicios"
-                className="rounded-md border border-white/30 px-6 py-3 font-bold text-white transition-colors hover:bg-white/10"
-              >
-                Ver servicios
-              </Link>
-            </div>
-          </div>
-          <Photo
-            src="/images/hero.jpg"
-            alt="Cuadrilla MOZA en un sitio de telefonía"
-            className="aspect-[4/3] rounded-2xl shadow-2xl ring-1 ring-white/10"
-            sizes="(min-width: 768px) 40vw, 100vw"
-            priority
+      {/* Hero: torre que se dibuja + titular */}
+      <section className="relative isolate flex min-h-[calc(100svh-5rem)] items-center overflow-hidden bg-navy-900 text-white">
+        <div aria-hidden className="blueprint absolute inset-0 -z-10" />
+        <HeroTower className="absolute inset-y-0 right-[-14%] -z-10 w-[88%] opacity-45 sm:right-[-6%] sm:w-[60%] sm:opacity-100 lg:right-[2%] lg:w-[46%]" />
+
+        <div className="mx-auto w-full max-w-7xl px-5 py-20 sm:px-8">
+          <HeadlineReveal
+            text={home.heroTitle}
+            className="max-w-5xl font-display text-[clamp(3.4rem,8vw,7rem)] lg:max-w-[60%] font-black uppercase leading-[0.88]"
           />
+          <p className="mt-8 max-w-xl text-xl leading-relaxed text-white/85">
+            {home.heroText}
+          </p>
+          <div className="mt-10 flex flex-wrap gap-4">
+            <Link href="/about" className="btn btn-orange chamfer">
+              Nosotros
+            </Link>
+            <Link href="/servicios" className="btn btn-line chamfer">
+              Ver servicios
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* Features */}
-      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-        <ul className="grid gap-6 md:grid-cols-3">
-          {home.features.map((f) => (
+      {/* Cifras */}
+      <section className="bg-white">
+        <dl className="mx-auto grid max-w-7xl divide-y divide-navy/15 px-5 sm:px-8 md:grid-cols-3 md:divide-x md:divide-y-0">
+          {[
+            { value: <Counter to={stats.cuadrillas} />, label: "cuadrillas de trabajo" },
+            { value: <Counter to={stats.estados} />, label: "estados en toda la república" },
+            { value: <Counter to={stats.anios} prefix="+" />, label: "años de experiencia" },
+          ].map((s) => (
+            <div key={s.label} className="py-10 md:px-10 md:first:pl-0 md:last:pr-0">
+              <dd className="font-display text-[clamp(5rem,12vw,9rem)] font-black leading-[0.85] text-orange">
+                {s.value}
+              </dd>
+              <dt className="mt-3 text-xl font-semibold text-navy">{s.label}</dt>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      {/* Cinta de servicios */}
+      <section aria-label="Servicios" className="bg-navy-900">
+        <Marquee items={services.items.map((s) => s.title)} />
+      </section>
+
+      {/* Tres compromisos */}
+      <section className="mx-auto max-w-7xl px-5 py-20 sm:px-8 md:py-28">
+        <ul className="space-y-20 md:space-y-28">
+          {home.features.map((f, i) => (
             <li
               key={f.kicker}
-              className="rounded-2xl border border-navy/10 bg-white p-8 shadow-sm transition-shadow hover:shadow-lg"
+              className="grid items-center gap-8 md:grid-cols-12 md:gap-12"
             >
-              <p className="text-xs font-bold uppercase tracking-widest text-orange">
-                {f.kicker}
-              </p>
-              <h2 className="mt-3 text-xl font-bold text-navy">{f.title}</h2>
+              <Photo
+                src={f.image}
+                alt={f.kicker}
+                className={`chamfer chamfer-lg aspect-[4/3] md:col-span-5 ${
+                  i % 2 === 1 ? "md:order-2" : ""
+                }`}
+                sizes="(min-width: 768px) 40vw, 100vw"
+              />
+              <div className={`md:col-span-7 ${i % 2 === 1 ? "md:order-1" : ""}`}>
+                <h2 className="font-display text-6xl font-black uppercase leading-[0.9] text-navy md:text-8xl">
+                  {f.kicker}
+                </h2>
+                <p className="mt-4 max-w-lg text-2xl leading-snug text-navy/85">
+                  {f.title}
+                </p>
+              </div>
             </li>
           ))}
         </ul>
       </section>
 
-      {/* Especialistas */}
-      <section className="bg-navy-50">
-        <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 sm:px-6 md:grid-cols-2">
-          <div>
-            <h2 className="text-3xl font-black text-navy sm:text-4xl">
-              {home.specialistsTitle}
-            </h2>
-            <p className="mt-4 text-lg text-foreground/80">
-              {home.specialistsText}
-            </p>
-          </div>
-          <div className="rounded-2xl bg-white p-8 text-center shadow-sm">
-            <p className="text-sm font-bold uppercase tracking-widest text-navy/70">
-              Presentes en
-            </p>
-            <p className="mt-2 text-7xl font-black text-orange">{stats.estados}</p>
-            <p className="mt-1 text-lg font-semibold text-navy">
-              estados en toda la república
-            </p>
-          </div>
+      {/* Lectura que se ilumina con el scroll */}
+      <section className="bg-navy text-white">
+        <div className="mx-auto max-w-5xl px-5 py-24 sm:px-8 md:py-36">
+          <h2 className="font-display text-5xl font-black uppercase leading-[0.95] md:text-7xl">
+            {home.specialistsTitle}
+          </h2>
+          <ReadingText
+            text={home.specialistsText}
+            className="mt-10 max-w-3xl text-3xl font-medium leading-snug md:text-4xl"
+          />
         </div>
       </section>
+
+      <CtaBand />
     </>
   );
 }

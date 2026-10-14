@@ -12,15 +12,15 @@ type PhotoProps = {
 };
 
 /**
- * Renderiza la imagen si existe en /public; si no, un placeholder con la
- * paleta MOZA. Así el sitio compila y se ve bien antes de copiar las fotos.
- * Corre en servidor (build estático), no añade JS al cliente.
+ * Muestra la foto si existe en /public; si no, un placeholder con la paleta MOZA.
+ * Corre en servidor (build), no añade JS al cliente. Se puede pasar como prop a
+ * componentes de cliente (p. ej. la lista de servicios).
  */
 export default function Photo({
   src,
   alt,
   className = "",
-  sizes = "(min-width: 1024px) 33vw, 100vw",
+  sizes = "(min-width: 1024px) 40vw, 100vw",
   priority = false,
   contain = false,
 }: PhotoProps) {
@@ -31,9 +31,9 @@ export default function Photo({
       <div
         role="img"
         aria-label={alt}
-        className={`relative flex items-center justify-center overflow-hidden bg-gradient-to-br from-navy to-navy-900 ${className}`}
+        className={`ph flex items-center justify-center ${className}`}
       >
-        <span className="select-none text-4xl font-black tracking-[0.3em] text-white/20">
+        <span className="relative select-none font-display text-5xl font-black tracking-[0.2em] text-white/15">
           MOZA
         </span>
         <span className="absolute inset-x-0 bottom-0 h-1 bg-orange" />

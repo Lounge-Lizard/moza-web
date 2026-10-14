@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import CtaBand from "@/components/CtaBand";
 import Photo from "@/components/Photo";
+import ReadingText from "@/components/motion/ReadingText";
 import { about, stats } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -11,78 +13,95 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <section className="bg-navy text-white">
-        <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-          <p className="text-xs font-bold uppercase tracking-[0.3em] text-orange">
+      <section className="relative isolate overflow-hidden bg-navy-900 text-white">
+        <div aria-hidden className="blueprint absolute inset-0 -z-10 opacity-70" />
+        <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 md:py-28">
+          <h1 className="font-display text-[clamp(3.6rem,10vw,9rem)] font-black uppercase leading-[0.88]">
             {about.kicker}
-          </p>
-          <h1 className="mt-4 max-w-3xl text-4xl font-black leading-tight sm:text-5xl">
-            {about.title}
           </h1>
-          <p className="mt-6 max-w-2xl text-lg text-white/80">{about.intro}</p>
-
-          <dl className="mt-10 grid max-w-2xl grid-cols-3 gap-4">
-            {[
-              { v: stats.cuadrillas, l: "Cuadrillas de trabajo" },
-              { v: stats.estados, l: "Estados" },
-              { v: `+${stats.anios}`, l: "Años de experiencia" },
-            ].map((s) => (
-              <div key={s.l} className="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
-                <dd className="text-3xl font-black text-orange sm:text-4xl">{s.v}</dd>
-                <dt className="mt-1 text-xs font-semibold text-white/80 sm:text-sm">
-                  {s.l}
-                </dt>
-              </div>
-            ))}
-          </dl>
+          <p className="mt-6 font-display text-3xl font-bold uppercase text-orange-soft md:text-5xl">
+            {about.title}
+          </p>
+          <p className="mt-6 max-w-2xl text-xl leading-relaxed text-white/85">
+            {about.intro}
+          </p>
+          <p className="mt-8 max-w-2xl border-l-4 border-orange pl-5 text-xl font-semibold">
+            {stats.cuadrillas} cuadrillas de trabajo, {stats.estados} estados y más de {stats.anios} años de experiencia.
+          </p>
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-6xl gap-6 px-4 py-16 sm:px-6 md:grid-cols-2">
-        <article className="rounded-2xl border border-navy/10 p-8">
-          <h2 className="text-2xl font-black text-navy">Misión</h2>
-          <p className="mt-4 leading-relaxed text-foreground/80">{about.mision}</p>
-        </article>
-        <article className="rounded-2xl border border-navy/10 p-8">
-          <h2 className="text-2xl font-black text-navy">Visión</h2>
-          <p className="mt-4 leading-relaxed text-foreground/80">{about.vision}</p>
-        </article>
+      {/* Misión y visión: se leen iluminándose */}
+      <section className="bg-white">
+        <div className="mx-auto max-w-5xl space-y-24 px-5 py-24 sm:px-8 md:py-32">
+          <article>
+            <h2 className="font-display text-6xl font-black uppercase leading-none text-orange md:text-8xl">
+              Misión
+            </h2>
+            <ReadingText
+              text={about.mision}
+              className="mt-8 text-2xl font-medium leading-snug text-navy md:text-4xl md:leading-[1.2]"
+            />
+          </article>
+          <article>
+            <h2 className="font-display text-6xl font-black uppercase leading-none text-orange md:text-8xl">
+              Visión
+            </h2>
+            <ReadingText
+              text={about.vision}
+              className="mt-8 text-2xl font-medium leading-snug text-navy md:text-4xl md:leading-[1.2]"
+            />
+          </article>
+        </div>
       </section>
 
-      <section className="bg-navy-50">
-        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-          <ul className="grid gap-6 md:grid-cols-3">
-            {about.highlights.map((h) => (
-              <li key={h.title} className="overflow-hidden rounded-2xl bg-white shadow-sm">
-                <Photo src={h.image} alt={h.title} className="aspect-[4/3]" />
-                <div className="p-6">
-                  <h3 className="text-lg font-bold text-navy">{h.title}</h3>
-                  <p className="mt-1 text-sm text-foreground/70">{h.text}</p>
-                </div>
+      {/* Tres fotos escalonadas */}
+      <section className="bg-paper">
+        <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 md:py-28">
+          <ul className="grid gap-12 md:grid-cols-3 md:gap-8">
+            {about.highlights.map((h, i) => (
+              <li key={h.title} className={i === 1 ? "md:mt-20" : i === 2 ? "md:mt-40" : ""}>
+                <Photo
+                  src={h.image}
+                  alt={h.title}
+                  className="chamfer chamfer-lg aspect-[3/4]"
+                  sizes="(min-width: 768px) 30vw, 100vw"
+                />
+                <h3 className="mt-5 font-display text-4xl font-extrabold uppercase leading-none text-navy">
+                  {h.title}
+                </h3>
+                <p className="mt-2 text-lg text-navy/80">{h.text}</p>
               </li>
             ))}
           </ul>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-        <h2 className="text-center text-3xl font-black text-navy">
-          {about.clientsTitle}
-        </h2>
-        <ul className="mt-10 grid grid-cols-2 items-center gap-6 sm:grid-cols-3 lg:grid-cols-5">
-          {about.clients.map((c) => (
-            <li key={c.image}>
-              <Photo
-                src={c.image}
-                alt={c.name}
-                contain
-                className="aspect-square"
-                sizes="(min-width: 1024px) 20vw, 50vw"
-              />
-            </li>
-          ))}
-        </ul>
+      <section className="bg-white">
+        <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 md:py-28">
+          <h2 className="font-display text-5xl font-black uppercase leading-none text-navy md:text-7xl">
+            {about.clientsTitle}
+          </h2>
+          <ul className="mt-12 grid grid-cols-2 items-center gap-6 sm:grid-cols-3 lg:grid-cols-5">
+            {about.clients.map((c) => (
+              <li
+                key={c.image}
+                className="opacity-80 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0"
+              >
+                <Photo
+                  src={c.image}
+                  alt={c.name}
+                  contain
+                  className="aspect-square"
+                  sizes="(min-width: 1024px) 20vw, 50vw"
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
+
+      <CtaBand />
     </>
   );
 }

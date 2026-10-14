@@ -11,47 +11,50 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <section className="bg-navy text-white">
-        <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-          <h1 className="text-4xl font-black sm:text-5xl">{contact.title}</h1>
-          <p className="mt-4 max-w-2xl text-lg text-white/80">{contact.text}</p>
+      <section className="relative isolate overflow-hidden bg-navy-900 text-white">
+        <div aria-hidden className="blueprint absolute inset-0 -z-10 opacity-70" />
+        <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 md:py-28">
+          <h1 className="font-display text-[clamp(3.6rem,10vw,9rem)] font-black uppercase leading-[0.88]">
+            {contact.title}
+          </h1>
+          <p className="mt-6 max-w-2xl text-xl leading-relaxed text-white/85">
+            {contact.text}
+          </p>
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1.3fr_1fr]">
+      <section className="mx-auto grid max-w-7xl gap-16 px-5 py-16 sm:px-8 md:py-24 lg:grid-cols-[1.3fr_1fr]">
         <div>
-          <h2 className="text-2xl font-black text-navy">{contact.formTitle}</h2>
-          <p className="mt-2 mb-8 text-foreground/75">{contact.formText}</p>
+          <h2 className="font-display text-5xl font-black uppercase leading-none text-navy md:text-6xl">
+            {contact.formTitle}
+          </h2>
+          <p className="mb-10 mt-4 max-w-lg text-lg text-navy/80">{contact.formText}</p>
           <ContactForm />
         </div>
 
-        <aside className="h-fit rounded-2xl bg-navy-50 p-8">
-          <h2 className="text-2xl font-black text-navy">{contact.infoTitle}</h2>
-          <p className="mt-2 text-sm text-foreground/75">{contact.infoText}</p>
+        <aside className="chamfer chamfer-lg h-fit bg-navy p-8 text-white md:p-10">
+          <h2 className="font-display text-4xl font-black uppercase leading-none">
+            {contact.infoTitle}
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-white/85">{contact.infoText}</p>
 
-          <dl className="mt-6 space-y-5 text-sm">
+          <dl className="mt-8 space-y-6">
             <div>
-              <dt className="text-xs font-bold uppercase tracking-widest text-orange">
-                Horarios
-              </dt>
-              <dd className="mt-1 font-semibold text-navy">{site.hours}</dd>
+              <dt className="text-base font-bold text-orange-soft">Horarios</dt>
+              <dd className="mt-1 text-xl font-semibold">{site.hours}</dd>
             </div>
             <div>
-              <dt className="text-xs font-bold uppercase tracking-widest text-orange">
-                Correo
-              </dt>
-              <dd className="mt-1 font-semibold text-navy">
-                <a href={`mailto:${site.email}`} className="hover:text-orange">
+              <dt className="text-base font-bold text-orange-soft">Correo</dt>
+              <dd className="mt-1 text-xl font-semibold">
+                <a href={`mailto:${site.email}`} className="hover:underline">
                   {site.email}
                 </a>
               </dd>
             </div>
             <div>
-              <dt className="text-xs font-bold uppercase tracking-widest text-orange">
-                Número
-              </dt>
-              <dd className="mt-1 font-semibold text-navy">
-                <a href={site.phoneHref} className="hover:text-orange">
+              <dt className="text-base font-bold text-orange-soft">Número</dt>
+              <dd className="mt-1 text-xl font-semibold">
+                <a href={site.phoneHref} className="hover:underline">
                   {site.phone}
                 </a>
               </dd>
@@ -60,10 +63,11 @@ export default function ContactPage() {
         </aside>
       </section>
 
-      <section className="bg-navy text-white">
-        <div className="mx-auto max-w-6xl px-4 py-14 text-center sm:px-6">
-          <h2 className="text-2xl font-black sm:text-3xl">{contact.closing}</h2>
-          <p className="mt-3 text-white/80">{contact.closingText}</p>
+      <section className="bg-orange">
+        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 md:py-20">
+          <h2 className="max-w-4xl font-display text-5xl font-black uppercase leading-[0.95] text-white md:text-7xl">
+            {contact.closing}
+          </h2>
         </div>
       </section>
     </>

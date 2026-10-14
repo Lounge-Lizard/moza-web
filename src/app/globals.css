@@ -2,21 +2,27 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #1b2433;
-  --moza-navy: #0d2d5e;
-  --moza-orange: #e8501a;
+  --foreground: #0a1628;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-navy: var(--moza-navy);
-  --color-navy-900: #081c3d;
-  --color-navy-50: #eef2f8;
-  --color-orange: var(--moza-orange);
+
+  /* Paleta MOZA */
+  --color-navy: #0d2d5e;
+  --color-navy-900: #071a38;
+  --color-navy-700: #14407f;
+  --color-orange: #e8501a;
   --color-orange-600: #c9420f;
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
+  /* Naranja claro: texto pequeño sobre fondos oscuros (el naranja base no llega a 4.5:1) */
+  --color-orange-soft: #ff8a5c;
+  --color-paper: #eef2f7;
+  --color-steel: #8fb0e0;
+
+  --font-display: "Big Shoulders Display Variable", "Arial Narrow", Impact,
+    sans-serif;
+  --font-sans: "IBM Plex Sans Variable", ui-sans-serif, system-ui, sans-serif;
 }
 
 html {
@@ -30,12 +36,188 @@ body {
 }
 
 ::selection {
-  background: var(--moza-orange);
+  background: var(--color-orange);
   color: #fff;
 }
 
+/* ---------- Esquinas cortadas: placas de acero ---------- */
+.chamfer {
+  --cut: 14px;
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--cut)) 0,
+    100% var(--cut),
+    100% 100%,
+    var(--cut) 100%,
+    0 calc(100% - var(--cut))
+  );
+}
+.chamfer-lg {
+  --cut: 34px;
+}
+/* clip-path recorta el outline exterior: el foco va hacia adentro */
+.chamfer:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: -7px;
+}
+
+/* ---------- Botones ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 1.9rem;
+  font-size: 1.125rem; /* 18px bold = texto grande, contraste >= 3:1 */
+  font-weight: 700;
+  line-height: 1;
+  transition:
+    background-color 0.25s,
+    color 0.25s,
+    box-shadow 0.25s;
+}
+.btn-orange {
+  background: var(--color-orange);
+  color: #fff;
+}
+.btn-orange:hover {
+  background: var(--color-orange-600);
+}
+.btn-navy {
+  background: var(--color-navy-900);
+  color: #fff;
+}
+.btn-navy:hover {
+  background: #fff;
+  color: var(--color-navy);
+}
+.btn-line {
+  color: #fff;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.55);
+}
+.btn-line:hover {
+  background: #fff;
+  color: var(--color-navy);
+}
+
+/* ---------- Plano técnico del hero ---------- */
+.blueprint {
+  background-image:
+    linear-gradient(rgba(143, 176, 224, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(143, 176, 224, 0.1) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(
+    75% 70% at 72% 45%,
+    #000 25%,
+    transparent 80%
+  );
+  mask-image: radial-gradient(75% 70% at 72% 45%, #000 25%, transparent 80%);
+}
+
+/* ---------- Ondas de señal ---------- */
+@keyframes signal-ring {
+  0% {
+    transform: scale(0.04);
+    opacity: 0.95;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+.signal-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  vector-effect: non-scaling-stroke;
+  animation: signal-ring 7.5s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+}
+@keyframes beacon {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(2.4);
+  }
+}
+.beacon-halo {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: beacon 2.4s ease-in-out infinite;
+}
+
+/* ---------- Marquee ---------- */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 48s linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+.outline-text {
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(143, 176, 224, 0.65);
+  transition:
+    color 0.3s,
+    -webkit-text-stroke-color 0.3s;
+}
+.outline-text:hover {
+  color: var(--color-orange);
+  -webkit-text-stroke-color: var(--color-orange);
+}
+
+/* ---------- Placeholder de foto (hasta que lleguen las reales) ---------- */
+.ph {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0d2d5e, #071a38);
+}
+@keyframes ph-drift {
+  to {
+    transform: translate(32.52px, 32.52px);
+  }
+}
+.ph::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background: repeating-linear-gradient(
+    135deg,
+    transparent 0 22px,
+    rgba(143, 176, 224, 0.09) 22px 23px
+  );
+  animation: ph-drift 4s linear infinite;
+}
+
+/* ---------- Scroll horizontal (galería) ---------- */
+.rail {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-orange) transparent;
+}
+
+/* ---------- Movimiento reducido ---------- */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  .marquee-track,
+  .signal-ring,
+  .beacon-halo,
+  .ph::before {
+    animation: none;
+  }
+  .signal-ring {
+    transform: scale(0.35);
+    opacity: 0.35;
+  }
+  .marquee {
+    overflow-x: auto;
   }
 }

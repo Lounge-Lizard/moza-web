@@ -8,7 +8,7 @@ type LogoProps = {
 };
 
 // Originales WP: uploads/2025/09/3.png (header/footer) y 1.png (variante).
-// Copiar a /public/images/logo.png y /public/images/logo-light.png.
+// Copiar a /public/images/logo.png (para fondo claro) y /public/images/logo-light.png (para fondo oscuro).
 export default function Logo({ variant = "dark", className = "" }: LogoProps) {
   const file = variant === "light" ? "logo-light.png" : "logo.png";
   const exists = fs.existsSync(
@@ -18,7 +18,7 @@ export default function Logo({ variant = "dark", className = "" }: LogoProps) {
   if (!exists) {
     return (
       <span
-        className={`text-2xl font-black tracking-[0.25em] ${
+        className={`font-display text-4xl font-black leading-none tracking-[0.18em] ${
           variant === "light" ? "text-white" : "text-navy"
         } ${className}`}
       >

@@ -1,8 +1,11 @@
 import type { Metadata, Viewport } from "next";
+import "@fontsource-variable/big-shoulders-display";
+import "@fontsource-variable/ibm-plex-sans";
 import "./globals.css";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Logo from "@/components/Logo";
+import ScrollMast from "@/components/motion/ScrollMast";
 import { site } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -25,7 +28,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0D2D5E",
+  themeColor: "#071A38",
 };
 
 export default function RootLayout({
@@ -36,11 +39,12 @@ export default function RootLayout({
       <body className="flex min-h-screen flex-col antialiased">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-orange focus:px-4 focus:py-2 focus:text-white"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:bg-orange focus:px-4 focus:py-2 focus:text-white"
         >
           Saltar al contenido
         </a>
-        <Header logo={<Logo variant="dark" />} />
+        <Header logo={<Logo variant="light" />} />
+        <ScrollMast />
         <main id="main" className="flex-1">
           {children}
         </main>
