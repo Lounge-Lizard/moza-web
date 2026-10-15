@@ -6,7 +6,7 @@ import { motion, useReducedMotion } from "motion/react";
 export default function HeadlineReveal({
   text,
   className = "",
-  delay = 0.9,
+  delay = 0.1,
 }: {
   text: string;
   className?: string;

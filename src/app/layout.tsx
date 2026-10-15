@@ -1,12 +1,26 @@
 import type { Metadata, Viewport } from "next";
-import "@fontsource-variable/big-shoulders-display";
-import "@fontsource-variable/ibm-plex-sans";
+import localFont from "next/font/local";
 import "./globals.css";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Logo from "@/components/Logo";
 import ScrollMast from "@/components/motion/ScrollMast";
 import { site } from "@/lib/content";
+
+const display = localFont({
+  src: "../fonts/big-shoulders.woff2",
+  weight: "100 900",
+  variable: "--font-display-loaded",
+  display: "swap",
+  adjustFontFallback: "Arial",
+});
+const sans = localFont({
+  src: "../fonts/ibm-plex-sans.woff2",
+  weight: "100 700",
+  variable: "--font-sans-loaded",
+  display: "swap",
+  adjustFontFallback: "Arial",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -35,7 +49,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="es-MX">
+    <html lang="es-MX" className={`${display.variable} ${sans.variable}`}>
       <body className="flex min-h-screen flex-col antialiased">
         <a
           href="#main"
